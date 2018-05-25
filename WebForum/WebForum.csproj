@@ -131,8 +131,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Context.cs" />
-    <Compile Include="Repositories\GroupsRepository.cs" />
-    <Compile Include="Repositories\IGroupsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

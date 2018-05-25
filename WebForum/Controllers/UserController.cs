@@ -11,7 +11,6 @@ namespace WebForum.Controllers
 {
     public class UserController : ApiController
     {
-
         public IEnumerable<User> GetAllUsers()
         {
             using (var context = new Context())

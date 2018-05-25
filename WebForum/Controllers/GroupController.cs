@@ -1,37 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using WebForum.Repositories;
+using CommonLibrary.Models;
+
+//using System.Text.RegularExpressions;
 
 namespace WebForum.Controllers
 {
     public class GroupController : ApiController
     {
-        private readonly IGroupsRepository groupsRepository;
-
-        public GroupController(IGroupsRepository groupRepository)
-        {
-            this.groupsRepository = groupRepository;
-        }
-
         public IEnumerable<Group> GetAllGroups()
         {
-            return groupsRepository.GetAll();
+            using (var context = new Context())
+            {
+                return context.Groups.ToList();
+            }
         }
 
-        public IHttpActionResult GetGroup(int id)
+        [HttpPost()]
+        public async Task<Group> AddNewGroup(Group group)
         {
-            return null;
-            //var product = products.FirstOrDefault((p) => p.Id == id);
-            //if (product == null)
-            //{
-            //    return NotFound();
-            //}
-            //return Ok(product);
+            using (var context = new Context())
+            {
+                context.Groups.Add(group);
+                await context.SaveChangesAsync();
+            }
+
+            return group;
+
+        }
+
+        public async Task DeleteGroup(int id)
+        {
+            using (var context = new Context())
+            {
+                var group = context.Groups.FirstOrDefault(u => u.Id == id);
+
+                context.Groups.Remove(group);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

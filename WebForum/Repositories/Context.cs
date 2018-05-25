@@ -10,5 +10,6 @@ namespace WebForum.Repositories
     public class Context : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
     }
 }

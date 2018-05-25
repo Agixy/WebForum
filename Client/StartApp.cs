@@ -44,16 +44,75 @@ namespace Client
 
             //Console.WriteLine("Wcisnij cokolwiek by wyjsc");
             //Console.ReadKey();
-            #endregion 
+
 
             // USUWANIE USERA
-            Console.WriteLine("Podaj id usera do usuniecia");
-            int id = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Podaj id usera do usuniecia");
+            //int id = int.Parse(Console.ReadLine());
 
-            await DeleteUser(id);
-            Console.WriteLine("User został usuniety");
-            Console.ReadKey();
+            //await DeleteUser(id);
+            //Console.WriteLine("User został usuniety");
+            //Console.ReadKey();
+           
 
+            //// DODAWANIE GRUPY
+            //Console.WriteLine("Wcisnij cokolwiek by dodac grupę");
+            //Console.ReadKey();
+            //await AddGroup();
+            //Console.WriteLine("Grupa dodana");
+            //Console.ReadKey();
+
+            ////USUWANIE GRUPY
+            //Console.WriteLine("Podaj id grupy do usuniecia");
+            //int id = int.Parse(Console.ReadLine());
+
+            //await DeleteGroup(id);
+            //Console.WriteLine("Grupa została usunieta");
+            //Console.ReadKey();
+
+
+            ///// ODCZYTYWANIE WSZYSTKICH Grup
+            //Console.WriteLine("Wcisnij cokolwiek by odczytac grupy");
+            //Console.ReadKey();
+
+            //try
+            //{
+            //    var groups = await GetAllGroups();
+            //    foreach (var group in groups)
+            //    {
+            //        Console.WriteLine(group);
+            //    }
+            //}
+            //catch (HttpRequestException e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+
+            //Console.WriteLine("Wcisnij cokolwiek by wyjsc");
+            //Console.ReadKey();
+
+            #endregion
+        }
+
+        private async Task<IEnumerable<Group>> GetAllGroups()
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var address = "group";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);        // wyciagnac jako stale pole?
+                var uri = new Uri(baseUri, address);
+
+                httpClient.DefaultRequestHeaders.Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var getResponse = await httpClient.GetAsync(uri);
+                getResponse.EnsureSuccessStatusCode();
+                var groupsString = await getResponse.Content.ReadAsStringAsync();
+
+                var groups = JsonConvert.DeserializeObject<Group[]>(groupsString);
+
+                return groups;
+            }
         }
 
         private async Task<IEnumerable<User>> GetAllUsers()
@@ -105,7 +164,39 @@ namespace Client
                 var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
                 var uri = new Uri(baseUri, address);
 
-                await httpClient.DeleteAsync(uri);                  
+                await httpClient.DeleteAsync(uri);
+            }
+        }
+
+        private async Task DeleteGroup(int id)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var address = $"group/{id}";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
+                var uri = new Uri(baseUri, address);
+
+                await httpClient.DeleteAsync(uri);
+            }
+        }
+
+        private async Task AddGroup()
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var address = "group";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
+                var uri = new Uri(baseUri, address);
+
+                var group = new Group
+                {
+                    Name = "Moja grupa",
+                };
+
+                var groupSerialized = JsonConvert.SerializeObject(group);
+
+                await httpClient.PostAsync(uri, new StringContent(groupSerialized, Encoding.UTF8, "application/json"));
+
             }
         }
     }
