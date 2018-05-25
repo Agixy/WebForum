@@ -15,31 +15,45 @@ namespace Client
     {
         public async Task Start()
         {
+            #region
+            // DODAWANIE USERA
             //            Console.WriteLine("Wcisnij cokolwiek by dodac usera");
             //            Console.ReadKey();
             //            await AddUser();
             //            Console.WriteLine("User dodany");
             //            Console.ReadKey();
 
-            Console.WriteLine("Wcisnij cokolwiek by odczytac userow");
+
+            // ODCZYTYWANIE WSZYSTKICH USEROW
+            //Console.WriteLine("Wcisnij cokolwiek by odczytac userow");
+            //Console.ReadKey();
+
+            //try
+            //{
+
+            //    var users = await GetAllUsers();
+            //    foreach (var user in users)
+            //    {
+            //        Console.WriteLine(user);
+            //    }
+            //}
+            //catch (HttpRequestException e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+
+            //Console.WriteLine("Wcisnij cokolwiek by wyjsc");
+            //Console.ReadKey();
+            #endregion 
+
+            // USUWANIE USERA
+            Console.WriteLine("Podaj id usera do usuniecia");
+            int id = int.Parse(Console.ReadLine());
+
+            await DeleteUser(id);
+            Console.WriteLine("User został usuniety");
             Console.ReadKey();
 
-            try
-            {
-
-                var users = await GetAllUsers();
-                foreach (var user in users)
-                {
-                    Console.WriteLine(user);
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine(e);
-            }
-
-            Console.WriteLine("Wcisnij cokolwiek by wyjsc");
-            Console.ReadKey();
         }
 
         private async Task<IEnumerable<User>> GetAllUsers()
@@ -49,6 +63,7 @@ namespace Client
                 var address = "user";
                 var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
                 var uri = new Uri(baseUri, address);
+
                 httpClient.DefaultRequestHeaders.Accept
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -78,16 +93,19 @@ namespace Client
 
                 var userSerialized = JsonConvert.SerializeObject(user);
 
-                await httpClient.PostAsync(uri, new StringContent(
-                    userSerialized, Encoding.UTF8, "application/json"));
+                await httpClient.PostAsync(uri, new StringContent(userSerialized, Encoding.UTF8, "application/json"));
             }
         }
 
-        private void DeleteUser()
+        private async Task DeleteUser(int id)
         {
             using (HttpClient httpClient = new HttpClient())
             {
+                var address = $"user/{id}";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
+                var uri = new Uri(baseUri, address);
 
+                await httpClient.DeleteAsync(uri);                  
             }
         }
     }

@@ -14,22 +14,10 @@ namespace WebForum.Controllers
 
         public IEnumerable<User> GetAllUsers()
         {
-
-            //return new[]
-            //{
-            //    new User
-            //    {
-            //        Name = "Adam",
-            //        Id = 0,
-            //        Email = "adam@gmail.com"
-            //    }
-            //};
-
             using (var context = new Context())
             {
                 return context.Users.ToList();
             }
-
         }
 
 
@@ -46,9 +34,20 @@ namespace WebForum.Controllers
 
         }
 
-        //public User GetUserById(int id)
-        //{
+        public async Task DeleteUser(int id)
+        {
+            using (var context = new Context())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Id == id);
 
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        //private User GetUserById(int id)      // czy wyciagac to i tutaj przekazywac context?
+        //{
+            
         //}
     }
 }
