@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebForum.Models
 {
-    public class Message
+    public class Post
     {
     }
 }
