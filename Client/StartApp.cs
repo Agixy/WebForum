@@ -53,7 +53,7 @@ namespace Client
             //await DeleteUser(id);
             //Console.WriteLine("User został usuniety");
             //Console.ReadKey();
-           
+
 
             //// DODAWANIE GRUPY
             //Console.WriteLine("Wcisnij cokolwiek by dodac grupę");
@@ -92,6 +92,15 @@ namespace Client
             //Console.ReadKey();
 
             #endregion
+
+            //DODAWANIE POSTA
+            Console.WriteLine("Wcisnij podaj numer grupy do ktorej chcesz napisac post");
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Podaj test posta");
+            string text = Console.ReadLine();
+            await PostMessage(id, text);
+            Console.WriteLine("Post automatyczny napisany");
+            Console.ReadKey();
         }
 
         private async Task<IEnumerable<Group>> GetAllGroups()
@@ -198,6 +207,26 @@ namespace Client
                 await httpClient.PostAsync(uri, new StringContent(groupSerialized, Encoding.UTF8, "application/json"));
 
             }
+        }
+
+        private async Task PostMessage(int groupid, string text)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var address = $"message/{groupid}";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
+                var uri = new Uri(baseUri, address);
+
+                var message = new Message
+                {
+                    Text = text
+                };
+
+                var messageSerialized = JsonConvert.SerializeObject(message);
+
+                await httpClient.PostAsync(uri, new StringContent(messageSerialized, Encoding.UTF8, "application/json"));
+            }
+
         }
     }
 }

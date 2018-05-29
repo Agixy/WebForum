@@ -142,6 +142,10 @@
     <Compile Include="Migrations\201805291138352_PierwszaMig.Designer.cs">
       <DependentUpon>201805291138352_PierwszaMig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805291235190_Przywrocenie wiadomosci.cs" />
+    <Compile Include="Migrations\201805291235190_Przywrocenie wiadomosci.Designer.cs">
+      <DependentUpon>201805291235190_Przywrocenie wiadomosci.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Context.cs" />
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805291138352_PierwszaMig.resx">
       <DependentUpon>201805291138352_PierwszaMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805291235190_Przywrocenie wiadomosci.resx">
+      <DependentUpon>201805291235190_Przywrocenie wiadomosci.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

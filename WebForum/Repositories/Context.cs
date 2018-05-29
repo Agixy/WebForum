@@ -11,5 +11,6 @@ namespace WebForum.Repositories
     {
         public DbSet<UserDto> Users { get; set; }
         public DbSet<GroupDto> Groups { get; set; }
+        public DbSet<MessageDto> Messages { get; set; }
     }
 }

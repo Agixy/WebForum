@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using WebForum.Models;
 using WebForum.Repositories;
 
 namespace WebForum.Controllers
@@ -50,6 +49,21 @@ namespace WebForum.Controllers
             }
 
             return message;
+        }
+
+        [Route("api/message/{groupid}/{messageid}")]
+        public async Task DeleteMessage(int groupId, int messageId)
+        {
+            using (var context = new Context())
+            {
+                var group = context.Groups.FirstOrDefault(u => u.Id == groupId);
+                var message = group.Messages.FirstOrDefault(m => m.Id == messageId);
+
+                group.Messages.Remove(message);
+                context.Messages.Remove(message);
+               
+                await context.SaveChangesAsync();
+            }
         }
 
        
