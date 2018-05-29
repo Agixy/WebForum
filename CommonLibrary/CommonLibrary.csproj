@@ -42,7 +42,8 @@
   <ItemGroup>
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\GroupDto.cs" />
-    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessageDto.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

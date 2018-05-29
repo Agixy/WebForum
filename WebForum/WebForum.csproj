@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -136,6 +137,10 @@
     <Compile Include="Migrations\201805291041587_firstMigration.cs" />
     <Compile Include="Migrations\201805291041587_firstMigration.Designer.cs">
       <DependentUpon>201805291041587_firstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805291138352_PierwszaMig.cs" />
+    <Compile Include="Migrations\201805291138352_PierwszaMig.Designer.cs">
+      <DependentUpon>201805291138352_PierwszaMig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -166,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805291041587_firstMigration.resx">
       <DependentUpon>201805291041587_firstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805291138352_PierwszaMig.resx">
+      <DependentUpon>201805291138352_PierwszaMig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

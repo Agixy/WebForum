@@ -59,7 +59,7 @@ namespace WebForum.Controllers
                 context.Users.Remove(user);
                 await context.SaveChangesAsync();
             }
-        }
+        }      
 
         [HttpPost]
         [Route("api/user/{userid}/joingroup/{groupid}")]

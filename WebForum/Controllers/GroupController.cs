@@ -7,8 +7,6 @@ using System.Web.Http;
 using WebForum.Repositories;
 using CommonLibrary.Models;
 
-//using System.Text.RegularExpressions;
-
 namespace WebForum.Controllers
 {
     public class GroupController : ApiController
@@ -23,21 +21,21 @@ namespace WebForum.Controllers
 
                 foreach (var group in groupsDto)
                 {
-                    groups.Add(FFMapToGroup(group));
+                    groups.Add(MapToGroup(group));
                 }
 
                 return groups;
             }
         }
 
-        private Group FFMapToGroup(GroupDto dto)
+        private Group MapToGroup(GroupDto dto)
         {
-            return new Group { Name = dto.Name, Id = dto.Id };
+            return new Group { Name = dto.Text, Id = dto.Id };
         }
 
-        private GroupDto SDMapToGroupDto(Group group)
+        private GroupDto MapToGroupDto(Group group)
         {
-            return new GroupDto { Name = group.Name, Id = group.Id };
+            return new GroupDto { Text = group.Name, Id = group.Id };
         }
 
         [HttpPost()]
@@ -45,12 +43,11 @@ namespace WebForum.Controllers
         {
             using (var context = new Context())
             {
-                context.Groups.Add(SDMapToGroupDto(group));
+                context.Groups.Add(MapToGroupDto(group));
                 await context.SaveChangesAsync();
             }
 
             return group;
-
         }
 
         public async Task DeleteGroup(int id)
@@ -63,5 +60,6 @@ namespace WebForum.Controllers
                 await context.SaveChangesAsync();
             }
         }
+       
     }
 }

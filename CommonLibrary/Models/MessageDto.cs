@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CommonLibrary.Models
 {
-    public class GroupDto
+    public class MessageDto
     {
-        public string Text { get; set; }
         public int Id { get; set; }
+        public string Text { get; set; }
 
-        public virtual ICollection<UserDto> Users { get; set; }
-        public virtual ICollection<MessageDto> Messages { get; set; }
+        public virtual GroupDto Group { get; set; }
     }
 }
