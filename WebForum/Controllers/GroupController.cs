@@ -13,12 +13,31 @@ namespace WebForum.Controllers
 {
     public class GroupController : ApiController
     {
+        [HttpGet()]
         public IEnumerable<Group> GetAllGroups()
         {
             using (var context = new Context())
             {
-                return context.Groups.ToList();
+                var groupsDto = context.Groups.ToList();
+                List<Group> groups = new List<Group>();
+
+                foreach (var group in groupsDto)
+                {
+                    groups.Add(FFMapToGroup(group));
+                }
+
+                return groups;
             }
+        }
+
+        private Group FFMapToGroup(GroupDto dto)
+        {
+            return new Group { Name = dto.Name, Id = dto.Id };
+        }
+
+        private GroupDto SDMapToGroupDto(Group group)
+        {
+            return new GroupDto { Name = group.Name, Id = group.Id };
         }
 
         [HttpPost()]
@@ -26,7 +45,7 @@ namespace WebForum.Controllers
         {
             using (var context = new Context())
             {
-                context.Groups.Add(group);
+                context.Groups.Add(SDMapToGroupDto(group));
                 await context.SaveChangesAsync();
             }
 

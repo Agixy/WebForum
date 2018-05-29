@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CommonLibrary.Models
 {
-    public class User
+    public class UserDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-
-
-        public override string ToString()
-        {
-            return $"Imie: {Name}, e-mail: {Email}";
-        }
+        public virtual ICollection<GroupDto> Groups { get; set; } = new List<GroupDto>();
     }
 }

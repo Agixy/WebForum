@@ -15,17 +15,34 @@ namespace WebForum.Controllers
         {
             using (var context = new Context())
             {
-                return context.Users.ToList();
+                var usersDto = context.Users.ToList();
+                List<User> users = new List<User>();
+
+                foreach (var user in usersDto)
+                {
+                    users.Add(MapToUser(user));
+                }
+
+                return users;
             }
         }
 
+        private User MapToUser(UserDto dto)
+        {
+            return new User { Name = dto.Name, Id = dto.Id, Email = dto.Email };
+        }
+
+        private UserDto MapToUserDto(User user)
+        {
+            return new UserDto { Name = user.Name, Id = user.Id, Email = user.Email };
+        }
 
         [HttpPost()]
         public async Task<User> RegisterUser(User user)
         {
             using (var context = new Context())
             {
-                context.Users.Add(user);
+                context.Users.Add(MapToUserDto(user));
                 await context.SaveChangesAsync();
             }
 
@@ -44,9 +61,26 @@ namespace WebForum.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/user/{userid}/groups/{groupid}")]
+        public async Task JoinTheGroup(int userId, int groupId)
+        {
+            using (var context = new Context())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Id == userId);
+                var group = context.Groups.FirstOrDefault(g => g.Id == groupId);
+            
+
+                user.Groups.Add(group);
+
+                await context.SaveChangesAsync();
+
+            }
+        }
+
         //private User GetUserById(int id)      // czy wyciagac to i tutaj przekazywac context?
         //{
-            
+
         //}
     }
 }
