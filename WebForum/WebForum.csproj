@@ -129,6 +129,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805291032502_InitialCreate.cs" />
+    <Compile Include="Migrations\201805291032502_InitialCreate.Designer.cs">
+      <DependentUpon>201805291032502_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805291041587_firstMigration.cs" />
+    <Compile Include="Migrations\201805291041587_firstMigration.Designer.cs">
+      <DependentUpon>201805291041587_firstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Context.cs" />
   </ItemGroup>
@@ -150,6 +159,14 @@
       <Project>{c404446a-e9cc-4c1a-8e47-3511f9853c75}</Project>
       <Name>CommonLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805291032502_InitialCreate.resx">
+      <DependentUpon>201805291032502_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805291041587_firstMigration.resx">
+      <DependentUpon>201805291041587_firstMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

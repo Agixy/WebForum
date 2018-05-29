@@ -17,11 +17,11 @@ namespace Client
         {
             #region
             // DODAWANIE USERA
-            Console.WriteLine("Wcisnij cokolwiek by dodac usera");
-            Console.ReadKey();
-            await AddUser();
-            Console.WriteLine("User dodany");
-            Console.ReadKey();
+            //            Console.WriteLine("Wcisnij cokolwiek by dodac usera");
+            //            Console.ReadKey();
+            //            await AddUser();
+            //            Console.WriteLine("User dodany");
+            //            Console.ReadKey();
 
 
             // ODCZYTYWANIE WSZYSTKICH USEROW
@@ -53,7 +53,7 @@ namespace Client
             //await DeleteUser(id);
             //Console.WriteLine("User został usuniety");
             //Console.ReadKey();
-
+           
 
             //// DODAWANIE GRUPY
             //Console.WriteLine("Wcisnij cokolwiek by dodac grupę");
@@ -92,8 +92,6 @@ namespace Client
             //Console.ReadKey();
 
             #endregion
-
-
         }
 
         private async Task<IEnumerable<Group>> GetAllGroups()
@@ -199,23 +197,6 @@ namespace Client
 
                 await httpClient.PostAsync(uri, new StringContent(groupSerialized, Encoding.UTF8, "application/json"));
 
-            }
-        }
-
-        private async Task JoinTheGroup()
-        {
-            var groups = await GetAllGroups();
-
-            foreach (var group in groups)
-            {
-                Console.WriteLine(group);
-            }
-            Console.WriteLine("Do jakiej grupy chcesz dolaczyc?");  // dać to w glownej metodzie czy tu?
-            var groupName = Console.ReadLine();
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-                //await httpClient.PutAsync();
             }
         }
     }

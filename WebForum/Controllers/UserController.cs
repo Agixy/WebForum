@@ -62,7 +62,7 @@ namespace WebForum.Controllers
         }
 
         [HttpPost]
-        [Route("api/user/{userid}/groups/{groupid}")]
+        [Route("api/user/{userid}/joingroup/{groupid}")]
         public async Task JoinTheGroup(int userId, int groupId)
         {
             using (var context = new Context())
@@ -70,11 +70,24 @@ namespace WebForum.Controllers
                 var user = context.Users.FirstOrDefault(u => u.Id == userId);
                 var group = context.Groups.FirstOrDefault(g => g.Id == groupId);
             
-
                 user.Groups.Add(group);
 
                 await context.SaveChangesAsync();
+            }
+        }
 
+        [HttpPost]
+        [Route("api/user/{userid}/leavegroup/{groupid}")]
+        public async Task LeaveTheGroup(int userId, int groupId)
+        {
+            using (var context = new Context())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Id == userId);
+                var group = context.Groups.FirstOrDefault(g => g.Id == groupId);
+
+                user.Groups.Remove(group);
+
+                await context.SaveChangesAsync();
             }
         }
 
