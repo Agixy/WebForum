@@ -8,7 +8,7 @@ namespace CommonLibrary.Models
 {
     public class GroupDto
     {
-        public string Text { get; set; }
+        public string Name { get; set; }
         public int Id { get; set; }
 
         public virtual ICollection<UserDto> Users { get; set; }

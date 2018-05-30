@@ -11,12 +11,11 @@ namespace WebForum.Controllers
 {
     public class MessageController : ApiController
     {
-        [HttpGet()]
-        public IEnumerable<Message> GetAllMessagesFromGroup(int groupId)
+        public IEnumerable<Message> GetMessagesFromGroup(int Id)
         {
             using (var context = new Context())
             {
-                var group = context.Groups.FirstOrDefault(g => g.Id == groupId);
+                var group = context.Groups.FirstOrDefault(g => g.Id == Id);
                 List<Message> messages = new List<Message>();
                 foreach (var messageDto in group.Messages)
                 {

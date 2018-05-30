@@ -91,16 +91,44 @@ namespace Client
             //Console.WriteLine("Wcisnij cokolwiek by wyjsc");
             //Console.ReadKey();
 
-            #endregion
+            ////DODAWANIE POSTA
+            //Console.WriteLine("Wcisnij podaj numer grupy do ktorej chcesz napisac post");
+            //int id = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Podaj test posta");
+            //string text = Console.ReadLine();
+            //await PostMessage(id, text);
+            //Console.WriteLine("Post automatyczny napisany");
+            //Console.ReadKey();
 
-            //DODAWANIE POSTA
-            Console.WriteLine("Wcisnij podaj numer grupy do ktorej chcesz napisac post");
-            int id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Podaj test posta");
-            string text = Console.ReadLine();
-            await PostMessage(id, text);
-            Console.WriteLine("Post automatyczny napisany");
-            Console.ReadKey();
+            ////USUWANIE POSTA
+            //Console.WriteLine("Podaj numer grupy z ktorej chcesz usunac post");
+            //int groupid = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Podaj id posta do usuniecia");
+            //int postid = int.Parse(Console.ReadLine());
+            //await DeletePost(groupid, postid);
+            //Console.WriteLine("Post usunięto");
+            //Console.ReadKey();
+
+            ////ODCZYTYWANIE WSZYSTKICH POSTOW Z GRUPY
+            //Console.WriteLine("Podaj numer grupy z ktorej chcesz odczytac posty");
+            //int groupid = int.Parse(Console.ReadLine());
+
+            //try
+            //{
+
+            //    var messages = await GetAllPosts(groupid);
+            //    foreach (var message in messages)
+            //    {
+            //        Console.WriteLine(message);
+            //    }
+            //    Console.ReadKey();
+            //}
+            //catch (HttpRequestException e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+
+            #endregion
         }
 
         private async Task<IEnumerable<Group>> GetAllGroups()
@@ -227,6 +255,39 @@ namespace Client
                 await httpClient.PostAsync(uri, new StringContent(messageSerialized, Encoding.UTF8, "application/json"));
             }
 
+        }
+
+        private async Task DeletePost(int groupId, int postId)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var address = $"message/{groupId}/{postId}";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
+                var uri = new Uri(baseUri, address);
+
+                await httpClient.DeleteAsync(uri);
+            }
+        }
+
+        private async Task<IEnumerable<Message>> GetAllPosts(int groupId)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var address = $"message/{groupId}";
+                var baseUri = new Uri(ConfigurationManager.AppSettings["endPoint"]);
+                var uri = new Uri(baseUri, address);
+
+                httpClient.DefaultRequestHeaders.Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var getResponse = await httpClient.GetAsync(uri);
+                getResponse.EnsureSuccessStatusCode();
+                var messagesString = await getResponse.Content.ReadAsStringAsync();
+
+                var messages = JsonConvert.DeserializeObject<Message[]>(messagesString);
+
+                return messages;
+            }
         }
     }
 }

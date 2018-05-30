@@ -30,12 +30,12 @@ namespace WebForum.Controllers
 
         private Group MapToGroup(GroupDto dto)
         {
-            return new Group { Name = dto.Text, Id = dto.Id };
+            return new Group { Name = dto.Name, Id = dto.Id };
         }
 
         private GroupDto MapToGroupDto(Group group)
         {
-            return new GroupDto { Text = group.Name, Id = group.Id };
+            return new GroupDto { Name = group.Name, Id = group.Id };
         }
 
         [HttpPost()]
@@ -56,8 +56,13 @@ namespace WebForum.Controllers
             {
                 var group = context.Groups.FirstOrDefault(u => u.Id == id);
 
-                context.Groups.Remove(group);
-                await context.SaveChangesAsync();
+                if (group.Messages.LongCount() == 0)
+                {
+                    context.Groups.Remove(group);
+                    await context.SaveChangesAsync();
+                }
+                else
+                    throw new Exception("Nie można usunąć grupy ponieważ zawiera wiadomości");             
             }
         }
        
