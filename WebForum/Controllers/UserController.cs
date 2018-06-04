@@ -47,7 +47,6 @@ namespace WebForum.Controllers
             }
 
             return user;
-
         }
 
         public async Task DeleteUser(int id)
@@ -90,10 +89,5 @@ namespace WebForum.Controllers
                 await context.SaveChangesAsync();
             }
         }
-
-        //private User GetUserById(int id)      // czy wyciagac to i tutaj przekazywac context?
-        //{
-
-        //}
     }
 }
